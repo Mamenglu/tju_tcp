@@ -65,7 +65,7 @@ void retransmit(tju_tcp_t* sock);
 void add_to_send_buf(tju_tcp_t* sock,char* send_data,int send_len,int flag);
 void persist(tju_tcp_t* sock);
 
-void cal_rtt(tju_tcp_t* sock,int ack,struct timeval recv_time);
+void cal_rto(tju_tcp_t* sock,int ack,struct timeval recv_time);
 
 #endif
 

@@ -62,7 +62,7 @@
 
 //时间粒度1毫秒
 #define TIME_SCALE 1000
-#define INITIAL_RTO 10000
+#define INITIAL_RTO 100000
 
 typedef struct tju_tcp_t tju_tcp_t;
 
@@ -135,6 +135,8 @@ typedef struct {
 	int ack_cnt;//重复ACK数
 	uint32_t estmated_rtt;
 	uint32_t rtt_var;
+	uint32_t timeout;//超时时长
+
 	
 //   
 //   pthread_mutex_t ack_cnt_lock;

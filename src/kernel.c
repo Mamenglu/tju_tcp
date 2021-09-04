@@ -173,6 +173,7 @@ timer *creat_timer(int set_time,void (*func)()){
     nw_timer->set_time=set_time;
     nw_timer->now_time=set_time;
     nw_timer->func=func;
+    printf("\n超时时长设置为%d\n",set_time);
     return nw_timer;
 }
 void signalhandler(int sig){

@@ -39,6 +39,7 @@ tju_tcp_t* tju_socket(){
     sock->wnd_recv->window=(recv_queue*)malloc(sizeof(recv_queue));
     sock->wnd_send->estmated_rtt=0;
     sock->wnd_send->rtt_var=0;
+    sock->wnd_send->timeout=INITIAL_RTO;
     
 
     struct itimerval timeval;
@@ -471,7 +472,7 @@ int tju_handle_packet(tju_tcp_t* sock, char* pkt){
                     //计算rtt
                     struct timeval recv_time;
                     gettimeofday(&recv_time,NULL);
-                    cal_rtt(sock,ack,recv_time);
+                    cal_rto(sock,ack,recv_time);
 
                     int add_len = ack - sock->wnd_send->base;
                     while(add_len > 0)
@@ -721,7 +722,7 @@ void * send_thread(void* arg){
                 nw_sock->send_head=nw_sock->send_head->next;
                 nw_sock->wnd_send->nextseq+=nw_head->len+DEFAULT_HEADER_LEN;
                 nw_sock->wnd_send->wait_for_ack+=nw_head->len;
-                nw_head->skb_timer=creat_timer(INITIAL_RTO,retransmit);
+                nw_head->skb_timer=creat_timer(nw_sock->wnd_send->timeout,retransmit);
                 printf("\n创建计时器完成\n");
                 
 
@@ -872,7 +873,7 @@ void add_to_send_buf(tju_tcp_t* sock,char* send_data,int send_len,int flag){
     return;
 }
 
-void cal_rtt(tju_tcp_t* sock,int ack,struct timeval recv_time){
+void cal_rto(tju_tcp_t* sock,int ack,struct timeval recv_time){
     skb_node* nw_node=sock->sending_buf->head;
     while(nw_node!=NULL){
         if(nw_node->seq+nw_node->len+DEFAULT_HEADER_LEN==ack){
@@ -894,6 +895,7 @@ void cal_rtt(tju_tcp_t* sock,int ack,struct timeval recv_time){
     }
    
     int rto = sock->wnd_send->estmated_rtt + 4 * sock->wnd_send->rtt_var;
+    sock->wnd_send->timeout=rto;
     printf("\nRTO估计值为%d\n",rto);
 }
 
