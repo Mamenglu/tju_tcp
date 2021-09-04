@@ -549,6 +549,9 @@ int tju_handle_packet(tju_tcp_t* sock, char* pkt){
                         //}
                                         
                     }
+                    else if(nw_node->seq<sock->wnd_recv->expect_seq){
+                        printf("\n重复数据包，丢弃\n");
+                    }
                     else{
                         add_to_wnd_recv(sock,nw_node);
                     }
