@@ -475,7 +475,7 @@ int tju_handle_packet(tju_tcp_t* sock, char* pkt){
                     cal_rto(sock,ack,recv_time);
 
                     int add_len = ack - sock->wnd_send->base;
-                    while(add_len > 0)
+                    while((add_len > 0)&&(sock->sending_buf->head != NULL))
 
                     {
                         //printf("\n窗口推进2\n");
@@ -490,6 +490,7 @@ int tju_handle_packet(tju_tcp_t* sock, char* pkt){
                         free(send_node);
                         //printf("\n窗口推进3\n");
                     }
+                    printf("\n待接收ACK号为%d\n",sock->wnd_send->base);
                 }
 
 
@@ -519,6 +520,7 @@ int tju_handle_packet(tju_tcp_t* sock, char* pkt){
                 else{
                     if(nw_node->seq==sock->wnd_recv->expect_seq)
                     {
+                        printf("\n收到数据包seq=%d\n",nw_node->seq);
                         //printf("\n问题2\n");
                         add_to_wnd_recv(sock,nw_node);
                         //printf("\n问题5\n");
@@ -545,6 +547,7 @@ int tju_handle_packet(tju_tcp_t* sock, char* pkt){
                         sock->wnd_recv->recv_len-=nw_node->len;
                         sock->wnd_recv->window->head=sock->wnd_recv->window->head->next;
                         sock->wnd_recv->expect_seq+=nw_node->len+DEFAULT_HEADER_LEN;
+                        printf("\nexpect_seq=%d\n",sock->wnd_recv->expect_seq);
 
 
                         //}
@@ -712,7 +715,7 @@ void * send_thread(void* arg){
         if(nw_head!=NULL){
             //printf("\n问题2\n");
             while(pthread_mutex_lock(&(nw_sock->send_lock))!=0);
-            printf("发送窗口大小为%d",nw_sock->wnd_send->window_size);
+            //printf("发送窗口大小为%d",nw_sock->wnd_send->window_size);
             if(nw_sock->wnd_send->wait_for_ack+nw_head->len< nw_sock->wnd_send->window_size){
                 nw_sock->send_head->seq=nw_sock->wnd_send->nextseq;
                 gettimeofday(&(nw_sock->send_head->send_time),NULL);
@@ -723,7 +726,7 @@ void * send_thread(void* arg){
                 nw_sock->wnd_send->nextseq+=nw_head->len+DEFAULT_HEADER_LEN;
                 nw_sock->wnd_send->wait_for_ack+=nw_head->len;
                 nw_head->skb_timer=creat_timer(nw_sock->wnd_send->timeout,retransmit);
-                printf("\n创建计时器完成\n");
+                //printf("\n创建计时器完成\n");
                 
 
             }
@@ -735,23 +738,7 @@ void * send_thread(void* arg){
     }
 }
 
-void display_pkt(char* pkt){
-    printf("==========================================\n");
-    printf("源端口：%d          " , get_src(pkt));
-    printf("目的端口：%d \n",get_dst(pkt));
-    printf("seq：%d \n",get_seq(pkt));
-    printf("ack：%d \n",get_ack(pkt));
-    printf("hlen: %d        ",get_hlen(pkt));
-    printf("plen: %d\n",get_plen(pkt));
-    printf("FALG = %d\n",get_flags(pkt));
-    printf("FLAG: FIN = %d , ACK = %d , SYN = %d\n",
-            ((get_flags(pkt)&FIN_FLAG_MASK)>>1) , ((get_flags(pkt)&ACK_FLAG_MASK)>>2) , ((get_flags(pkt)&SYN_FLAG_MASK)>>3));
-    printf("ADV_window：%d\n",get_advertised_window(pkt));
-    printf("ext: %d \n",get_ext(pkt));
-    printf("payload:%s \n",pkt + DEFAULT_HEADER_LEN);
-    printf("==========================================\n");
-    return ;
-}
+
 
 
 
@@ -818,11 +805,14 @@ void wnd_to_buf(tju_tcp_t* sock,recv_skb_node* nw_node){
 }
 
 void retransmit(tju_tcp_t* sock){
-    printf("\n超时重传\n");
-    skb_node* nw_node=sock->sending_buf->head;
-    char* pkt=create_packet_buf(sock->established_local_addr.port,sock->established_remote_addr.port,sock->wnd_recv->expect_seq,0,DEFAULT_HEADER_LEN,nw_node->len+DEFAULT_HEADER_LEN,NO_FLAG,0,0,nw_node->data,nw_node->len);
-    sendToLayer3(pkt,nw_node->len+DEFAULT_HEADER_LEN);
-    printf("\n重传一个数据包%s,%d\n",nw_node->data,nw_node->flag);
+    if(sock->sending_buf->head != NULL){
+        //printf("\n超时重传\n");
+        skb_node* nw_node=sock->sending_buf->head;
+        char* pkt=create_packet_buf(sock->established_local_addr.port,sock->established_remote_addr.port,sock->wnd_send->base,0,DEFAULT_HEADER_LEN,nw_node->len+DEFAULT_HEADER_LEN,NO_FLAG,0,0,nw_node->data,nw_node->len);
+        sendToLayer3(pkt,nw_node->len+DEFAULT_HEADER_LEN);
+        printf("\n重传一个数据包%s,%d\n",nw_node->data,sock->wnd_send->base);
+    }
+    return;
 }
 
 void persist(tju_tcp_t* sock){

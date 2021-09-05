@@ -54,11 +54,11 @@ int tju_close (tju_tcp_t* sock);
 
 int tju_handle_packet(tju_tcp_t* sock, char* pkt);
 
-//void send_one(tju_tcp_t* sock);
+
 
 void * send_thread(void* arg);
 
-void display_pkt(char* pkt);
+
 void add_to_wnd_recv(tju_tcp_t* sock,recv_skb_node* nw_node);
 void wnd_to_buf(tju_tcp_t* sock,recv_skb_node* nw_node);
 void retransmit(tju_tcp_t* sock);

@@ -16,7 +16,142 @@ Interrupted
 Interrupted
 Interrupted
 Interrupted
-Interrupted
+
+收到数据包seq=0
+
+expect_seq=36
+
+收到数据包seq=36
+
+expect_seq=72
+
+收到数据包seq=72
+
+expect_seq=108
+
+收到数据包seq=108
+
+expect_seq=144
+
+收到数据包seq=144
+
+expect_seq=180
+
+收到数据包seq=180
+
+expect_seq=216
+
+收到数据包seq=216
+
+expect_seq=252
+
+收到数据包seq=252
+
+expect_seq=288
+
+收到数据包seq=288
+
+expect_seq=324
+
+收到数据包seq=324
+
+expect_seq=360
+
+收到数据包seq=360
+
+expect_seq=396
+
+收到数据包seq=396
+
+expect_seq=432
+
+收到数据包seq=432
+
+expect_seq=468
+
+收到数据包seq=468
+
+expect_seq=504
+
+收到数据包seq=504
+
+expect_seq=540
+
+收到数据包seq=540
+
+expect_seq=576
+
+收到数据包seq=576
+
+expect_seq=612
+
+收到数据包seq=612
+
+expect_seq=648
+
+收到数据包seq=648
+
+expect_seq=684
+
+收到数据包seq=684
+
+expect_seq=720
+
+收到数据包seq=720
+
+expect_seq=756
+
+收到数据包seq=756
+
+expect_seq=792
+
+收到数据包seq=792
+
+expect_seq=828
+
+收到数据包seq=828
+
+expect_seq=864
+
+收到数据包seq=864
+
+expect_seq=900
+
+收到数据包seq=900
+
+expect_seq=936
+
+收到数据包seq=936
+
+expect_seq=972
+
+收到数据包seq=972
+
+expect_seq=1008
+
+收到数据包seq=1008
+
+expect_seq=1044
+
+收到数据包seq=1044
+
+expect_seq=1080
+
+收到数据包seq=1080
+
+expect_seq=1116
+
+收到数据包seq=1116
+
+expect_seq=1152
+
+收到数据包seq=1152
+
+expect_seq=1188
+
+收到数据包seq=1188
+
+expect_seq=1224
 [RDT TEST] server recv test message0
 [RDT TEST] server recv test message1
 [RDT TEST] server recv test message2
@@ -51,21 +186,85 @@ Interrupted
 [RDT TEST] server recv test message31
 [RDT TEST] server recv test message32
 [RDT TEST] server recv test message33
+
+收到数据包seq=1224
+
+expect_seq=1260
 [RDT TEST] server recv test message34
+
+收到数据包seq=1260
+
+expect_seq=1296
 [RDT TEST] server recv test message35
+
+收到数据包seq=1296
+
+expect_seq=1332
 [RDT TEST] server recv test message36
+
+收到数据包seq=1332
+
+expect_seq=1368
 [RDT TEST] server recv test message37
+
+收到数据包seq=1368
+
+expect_seq=1404
 [RDT TEST] server recv test message38
+
+收到数据包seq=1404
+
+expect_seq=1440
 [RDT TEST] server recv test message39
+
+收到数据包seq=1440
+
+expect_seq=1476
 [RDT TEST] server recv test message40
+
+收到数据包seq=1476
+
+expect_seq=1512
 [RDT TEST] server recv test message41
+
+收到数据包seq=1512
+
+expect_seq=1548
 [RDT TEST] server recv test message42
+
+收到数据包seq=1548
+
+expect_seq=1584
 [RDT TEST] server recv test message43
+
+收到数据包seq=1584
+
+expect_seq=1620
 [RDT TEST] server recv test message44
+
+收到数据包seq=1620
+
+expect_seq=1656
+
+收到数据包seq=1656
+
+expect_seq=1692
 [RDT TEST] server recv test message45
 [RDT TEST] server recv test message46
+
+收到数据包seq=1692
+
+expect_seq=1728
 [RDT TEST] server recv test message47
+
+收到数据包seq=1728
+
+expect_seq=1764
 [RDT TEST] server recv test message48
+
+收到数据包seq=1764
+
+expect_seq=1800
 [RDT TEST] server recv test message49
 Interrupted
 Interrupted
