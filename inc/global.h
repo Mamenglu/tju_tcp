@@ -136,6 +136,8 @@ typedef struct {
 	uint32_t estmated_rtt;
 	uint32_t rtt_var;
 	uint32_t timeout;//超时时长
+	int congestion_status;
+	uint16_t ssthresh; 
 
 	
 //   
@@ -143,9 +145,9 @@ typedef struct {
 //   
 //   struct timeval timeout;
    	
-//   int congestion_status;
+
 	
-//   uint16_t ssthresh; 
+
 } sender_window_t;
 
 // TCP 接受窗口

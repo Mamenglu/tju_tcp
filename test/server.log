@@ -22,40 +22,50 @@ Interrupted
 expect_seq=36
 
 收到数据包seq=36
+[RDT TEST] server recv test message0
 
 expect_seq=72
+[RDT TEST] server recv test message1
 
 收到数据包seq=72
 
 expect_seq=108
+[RDT TEST] server recv test message2
 
 收到数据包seq=108
 
 expect_seq=144
+[RDT TEST] server recv test message3
 
 收到数据包seq=144
 
 expect_seq=180
+[RDT TEST] server recv test message4
 
 收到数据包seq=180
 
 expect_seq=216
+[RDT TEST] server recv test message5
 
 收到数据包seq=216
 
 expect_seq=252
+[RDT TEST] server recv test message6
 
 收到数据包seq=252
 
 expect_seq=288
+[RDT TEST] server recv test message7
 
 收到数据包seq=288
 
 expect_seq=324
+[RDT TEST] server recv test message8
 
 收到数据包seq=324
 
 expect_seq=360
+[RDT TEST] server recv test message9
 
 收到数据包seq=360
 
@@ -68,70 +78,89 @@ expect_seq=432
 收到数据包seq=432
 
 expect_seq=468
+[RDT TEST] server recv test message10
+[RDT TEST] server recv test message11
+[RDT TEST] server recv test message12
 
 收到数据包seq=468
 
 expect_seq=504
+[RDT TEST] server recv test message13
 
 收到数据包seq=504
 
 expect_seq=540
+[RDT TEST] server recv test message14
 
 收到数据包seq=540
 
 expect_seq=576
+[RDT TEST] server recv test message15
 
 收到数据包seq=576
 
 expect_seq=612
+[RDT TEST] server recv test message16
 
 收到数据包seq=612
 
 expect_seq=648
+[RDT TEST] server recv test message17
 
 收到数据包seq=648
 
 expect_seq=684
+[RDT TEST] server recv test message18
 
 收到数据包seq=684
 
 expect_seq=720
+[RDT TEST] server recv test message19
 
 收到数据包seq=720
 
 expect_seq=756
+[RDT TEST] server recv test message20
 
 收到数据包seq=756
 
 expect_seq=792
+[RDT TEST] server recv test message21
 
 收到数据包seq=792
 
 expect_seq=828
+[RDT TEST] server recv test message22
 
 收到数据包seq=828
 
 expect_seq=864
+[RDT TEST] server recv test message23
 
 收到数据包seq=864
 
 expect_seq=900
+[RDT TEST] server recv test message24
 
 收到数据包seq=900
 
 expect_seq=936
+[RDT TEST] server recv test message25
 
 收到数据包seq=936
 
 expect_seq=972
+[RDT TEST] server recv test message26
 
 收到数据包seq=972
 
 expect_seq=1008
+[RDT TEST] server recv test message27
 
 收到数据包seq=1008
 
 expect_seq=1044
+[RDT TEST] server recv test message28
 
 收到数据包seq=1044
 
@@ -140,51 +169,22 @@ expect_seq=1080
 收到数据包seq=1080
 
 expect_seq=1116
+[RDT TEST] server recv test message29
+[RDT TEST] server recv test message30
 
 收到数据包seq=1116
 
 expect_seq=1152
+[RDT TEST] server recv test message31
 
 收到数据包seq=1152
 
 expect_seq=1188
+[RDT TEST] server recv test message32
 
 收到数据包seq=1188
 
 expect_seq=1224
-[RDT TEST] server recv test message0
-[RDT TEST] server recv test message1
-[RDT TEST] server recv test message2
-[RDT TEST] server recv test message3
-[RDT TEST] server recv test message4
-[RDT TEST] server recv test message5
-[RDT TEST] server recv test message6
-[RDT TEST] server recv test message7
-[RDT TEST] server recv test message8
-[RDT TEST] server recv test message9
-[RDT TEST] server recv test message10
-[RDT TEST] server recv test message11
-[RDT TEST] server recv test message12
-[RDT TEST] server recv test message13
-[RDT TEST] server recv test message14
-[RDT TEST] server recv test message15
-[RDT TEST] server recv test message16
-[RDT TEST] server recv test message17
-[RDT TEST] server recv test message18
-[RDT TEST] server recv test message19
-[RDT TEST] server recv test message20
-[RDT TEST] server recv test message21
-[RDT TEST] server recv test message22
-[RDT TEST] server recv test message23
-[RDT TEST] server recv test message24
-[RDT TEST] server recv test message25
-[RDT TEST] server recv test message26
-[RDT TEST] server recv test message27
-[RDT TEST] server recv test message28
-[RDT TEST] server recv test message29
-[RDT TEST] server recv test message30
-[RDT TEST] server recv test message31
-[RDT TEST] server recv test message32
 [RDT TEST] server recv test message33
 
 收到数据包seq=1224
@@ -245,11 +245,11 @@ expect_seq=1620
 收到数据包seq=1620
 
 expect_seq=1656
+[RDT TEST] server recv test message45
 
 收到数据包seq=1656
 
 expect_seq=1692
-[RDT TEST] server recv test message45
 [RDT TEST] server recv test message46
 
 收到数据包seq=1692

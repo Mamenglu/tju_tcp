@@ -26,7 +26,7 @@ tju_tcp_t* tju_socket(){
     sock->wnd_send = (sender_window_t*)malloc(sizeof(sender_window_t));
 
     sock->wnd_send->rwnd =TCP_RECVWN_SIZE;
-    sock->wnd_send->cwnd=3*MAX_DLEN;
+    sock->wnd_send->cwnd=MAX_DLEN;
     sock->wnd_send->window_size=((sock->wnd_send->cwnd) < (sock->wnd_send->rwnd) ) ? (sock->wnd_send->cwnd) : sock->wnd_send->rwnd;
     printf("\n窗口初始化%d\n",sock->wnd_send->window_size);
     sock->wnd_send->nextseq=0;
@@ -40,6 +40,8 @@ tju_tcp_t* tju_socket(){
     sock->wnd_send->estmated_rtt=0;
     sock->wnd_send->rtt_var=0;
     sock->wnd_send->timeout=INITIAL_RTO;
+    sock->wnd_send->congestion_status=SLOW_START;
+    sock->wnd_send->ssthresh=16 * MAX_DLEN;
     
 
     struct itimerval timeval;
@@ -460,6 +462,7 @@ int tju_handle_packet(tju_tcp_t* sock, char* pkt){
                     sock->wnd_send->ack_cnt++;
                     if(sock->wnd_send->ack_cnt>=3){
                         printf("\n快速重传\n");
+                        sock->wnd_send->congestion_status = FAST_RECOVERY ;
                         retransmit(sock);
                         sock->wnd_send->ack_cnt=0;
                     }
@@ -489,6 +492,26 @@ int tju_handle_packet(tju_tcp_t* sock, char* pkt){
                         //printf("add_len %d,send_node_len %d",add_len,send_node->len);
                         free(send_node);
                         //printf("\n窗口推进3\n");
+                    }
+                    switch (sock->wnd_send->congestion_status)
+                    {
+                        case SLOW_START:
+                            sock->wnd_send->cwnd=2 * sock->wnd_send->cwnd;
+                            if(sock->wnd_send->cwnd >= sock->wnd_send->ssthresh){
+                                sock->wnd_send->congestion_status=CONGESTION_AVOIDANCE;
+                            }
+                            break;
+                        case CONGESTION_AVOIDANCE:
+                            sock->wnd_send->cwnd += MAX_DLEN;
+                            break;
+                        case FAST_RECOVERY:
+                            sock->wnd_send->ssthresh =( ( sock->wnd_send->cwnd / MAX_DLEN ) /2 ) * MAX_DLEN;
+                            sock->wnd_send->cwnd = sock->wnd_send->ssthresh;
+                            sock->wnd_send->congestion_status = CONGESTION_AVOIDANCE;
+                            break;
+                        
+                        default:
+                            break;
                     }
                     printf("\n待接收ACK号为%d\n",sock->wnd_send->base);
                 }
@@ -805,6 +828,9 @@ void wnd_to_buf(tju_tcp_t* sock,recv_skb_node* nw_node){
 }
 
 void retransmit(tju_tcp_t* sock){
+    sock->wnd_send->ssthresh =((( sock->wnd_send->cwnd ) / MAX_DLEN ) / 2 ) * MAX_DLEN;
+	sock->wnd_send->cwnd = MAX_DLEN;
+	sock->wnd_send->congestion_status = SLOW_START;
     if(sock->sending_buf->head != NULL){
         //printf("\n超时重传\n");
         skb_node* nw_node=sock->sending_buf->head;
